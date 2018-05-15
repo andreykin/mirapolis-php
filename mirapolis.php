@@ -1,72 +1,79 @@
 <?
 
-class Mirapolis {
+class Mirapolis
+{
 
 	public $baseUrl = 'http://YOUR_URL.vr.mirapolis.ru/mira';
-	public $appid = 'system'; // èäåíòèôèêàòîğ ïğèëîæåíèÿ
-	public $secretkey = 'YOR_KEY'; // êëş÷ ñèñòåìû
 
-	function signet($url, $params) { // url REST-çàïğîñà è ìàññèâ ïàğàìåòğîâ
-		$appid = $this->appid; // èäåíòèôèêàòîğ ïğèëîæåíèÿ
-		$secretkey = $this->secretkey; // êëş÷ ñèñòåìû
+	public $appid = 'system';
+ // Ğ¸Ğ´ĞµĞ½Ñ‚Ğ¸Ñ„Ğ¸ĞºĞ°Ñ‚Ğ¾Ñ€ Ğ¿Ñ€Ğ¸Ğ»Ğ¾Ğ¶ĞµĞ½Ğ¸Ñ
+	public $secretkey = 'YOR_KEY';
+ // ĞºĞ»ÑÑ‡ ÑĞ¸ÑÑ‚ĞµĞ¼Ñ‹
+	function signet($url, $params)
+	{ // url REST-Ğ·Ğ°Ğ¿Ñ€Ğ¾ÑĞ° Ğ¸ Ğ¼Ğ°ÑÑĞ¸Ğ² Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ¾Ğ²
+		$appid = $this->appid; // Ğ¸Ğ´ĞµĞ½Ñ‚Ğ¸Ñ„Ğ¸ĞºĞ°Ñ‚Ğ¾Ñ€ Ğ¿Ñ€Ğ¸Ğ»Ğ¾Ğ¶ĞµĞ½Ğ¸Ñ
+		$secretkey = $this->secretkey; // ĞºĞ»ÑÑ‡ ÑĞ¸ÑÑ‚ĞµĞ¼Ñ‹
 		
-		$ret_params = $params; // ìàññèâ ïåğåäàâàåìûõ ïàğàìåòğîâ
-		ksort($ret_params); // ñîğòèğîâêà ïàğàìåòğîâ ïî íàçâàíèş
-		$ret_params['appid'] = $appid; //ïîìåùåíèå â êîíåö ìàññèâà ïàğàìåòğà appid
+		$ret_params = $params; // Ğ¼Ğ°ÑÑĞ¸Ğ² Ğ¿ĞµÑ€ĞµĞ´Ğ°Ğ²Ğ°ĞµĞ¼Ñ‹Ñ… Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ¾Ğ²
+		ksort($ret_params); // ÑĞ¾Ñ€Ñ‚Ğ¸Ñ€Ğ¾Ğ²ĞºĞ° Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ¾Ğ² Ğ¿Ğ¾ Ğ½Ğ°Ğ·Ğ²Ğ°Ğ½Ğ¸Ñ
+		$ret_params['appid'] = $appid; // Ğ¿Ğ¾Ğ¼ĞµÑ‰ĞµĞ½Ğ¸Ğµ Ğ² ĞºĞ¾Ğ½ĞµÑ† Ğ¼Ğ°ÑÑĞ¸Ğ²Ğ° Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ° appid
 		
-		$signstring="$url?"; // ôîğìèğîâàíèå ñòğîêè äëÿ ïîäïèñè íà÷èíàÿ ñ url
+		$signstring = "$url?"; // Ñ„Ğ¾Ñ€Ğ¼Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ğµ ÑÑ‚Ñ€Ğ¾ĞºĞ¸ Ğ´Ğ»Ñ Ğ¿Ğ¾Ğ´Ğ¿Ğ¸ÑĞ¸ Ğ½Ğ°Ñ‡Ğ¸Ğ½Ğ°Ñ Ñ url
 		foreach ($ret_params as $key => $val) {
 			if (($val != "") || (gettype($val) != "string")) {
-				$signstring .= "$key=$val&"; // äîáàâëåíèå â ñòğîêó äëÿ ïîäïèñè î÷åğåäíîãî ïàğàìåòğà
+				$signstring .= "$key=$val&"; // Ğ´Ğ¾Ğ±Ğ°Ğ²Ğ»ĞµĞ½Ğ¸Ğµ Ğ² ÑÑ‚Ñ€Ğ¾ĞºÑƒ Ğ´Ğ»Ñ Ğ¿Ğ¾Ğ´Ğ¿Ğ¸ÑĞ¸ Ğ¾Ñ‡ĞµÑ€ĞµĞ´Ğ½Ğ¾Ğ³Ğ¾ Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ°
 			}
 		}
-		$signstring .= "secretkey=$secretkey"; // äîïîëíåíèå ñòğîêè äëÿ ïîäïèñè ïàğàìåòğîì secretkey
-		$ret_params['sign'] = strtoupper(md5($signstring)); // ôîğìèğîâàíèå êëş÷à è äîáàâëåíèå åãî â
-															// ìàññèâ ïàğàìåòğîâ
+		$signstring .= "secretkey=$secretkey"; // Ğ´Ğ¾Ğ¿Ğ¾Ğ»Ğ½ĞµĞ½Ğ¸Ğµ ÑÑ‚Ñ€Ğ¾ĞºĞ¸ Ğ´Ğ»Ñ Ğ¿Ğ¾Ğ´Ğ¿Ğ¸ÑĞ¸ Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ¾Ğ¼ secretkey
+		$ret_params['sign'] = strtoupper(md5($signstring)); // Ñ„Ğ¾Ñ€Ğ¼Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ğµ ĞºĞ»ÑÑ‡Ğ° Ğ¸ Ğ´Ğ¾Ğ±Ğ°Ğ²Ğ»ĞµĞ½Ğ¸Ğµ ĞµĞ³Ğ¾ Ğ²
+		                                                    // Ğ¼Ğ°ÑÑĞ¸Ğ² Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ¾Ğ²
 		return $ret_params;
 	}
 
 	function sendrequest($url, $parameters = array(), $method = 'POST', $ret_crange = 0)
 	{
-		//äîïîëíåíèå ìàññèâà ïàğàìåòğîâ çíà÷åíèÿìè appid è sign (èñïîëüçóåòñÿ âûøå îïèñàííàÿ ôóíêöèÿ signit)
+		// Ğ´Ğ¾Ğ¿Ğ¾Ğ»Ğ½ĞµĞ½Ğ¸Ğµ Ğ¼Ğ°ÑÑĞ¸Ğ²Ğ° Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ¾Ğ² Ğ·Ğ½Ğ°Ñ‡ĞµĞ½Ğ¸ÑĞ¼Ğ¸ appid Ğ¸ sign (Ğ¸ÑĞ¿Ğ¾Ğ»ÑŒĞ·ÑƒĞµÑ‚ÑÑ Ğ²Ñ‹ÑˆĞµ Ğ¾Ğ¿Ğ¸ÑĞ°Ğ½Ğ½Ğ°Ñ Ñ„ÑƒĞ½ĞºÑ†Ğ¸Ñ signit)
 		$curl_data = $this->signet($url, $parameters);
-		$ch = curl_init();//èíèöèàëèçàöèÿ äåñêğèïòîğà çàïğîñà
-		curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8'); // çàäàíèå êîäèğîâêè çàïğîñà
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // âîçâğàò ğåçóëüòàòà
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); // äåëàåò âîçìîæíûì ïåğåõîä íà ñòğàíèöó îøèáêè
-		curl_setopt($ch, CURLOPT_HEADER, $ret_crange); // äåëàåò âîçìîæíûì âîçâğàùåíèå çàãîëîâêà ContentRange
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method); // çàäàíèå ìåòîäà çàïğîñà
-		$query = http_build_query($curl_data); // ïîñòğîåíèå ñòğîêè ïàğàìåòğîâ
+		$ch = curl_init(); // Ğ¸Ğ½Ğ¸Ñ†Ğ¸Ğ°Ğ»Ğ¸Ğ·Ğ°Ñ†Ğ¸Ñ Ğ´ĞµÑĞºÑ€Ğ¸Ğ¿Ñ‚Ğ¾Ñ€Ğ° Ğ·Ğ°Ğ¿Ñ€Ğ¾ÑĞ°
+		curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8'); // Ğ·Ğ°Ğ´Ğ°Ğ½Ğ¸Ğµ ĞºĞ¾Ğ´Ğ¸Ñ€Ğ¾Ğ²ĞºĞ¸ Ğ·Ğ°Ğ¿Ñ€Ğ¾ÑĞ°
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // Ğ²Ğ¾Ğ·Ğ²Ñ€Ğ°Ñ‚ Ñ€ĞµĞ·ÑƒĞ»ÑŒÑ‚Ğ°Ñ‚Ğ°
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); // Ğ´ĞµĞ»Ğ°ĞµÑ‚ Ğ²Ğ¾Ğ·Ğ¼Ğ¾Ğ¶Ğ½Ñ‹Ğ¼ Ğ¿ĞµÑ€ĞµÑ…Ğ¾Ğ´ Ğ½Ğ° ÑÑ‚Ñ€Ğ°Ğ½Ğ¸Ñ†Ñƒ Ğ¾ÑˆĞ¸Ğ±ĞºĞ¸
+		curl_setopt($ch, CURLOPT_HEADER, $ret_crange); // Ğ´ĞµĞ»Ğ°ĞµÑ‚ Ğ²Ğ¾Ğ·Ğ¼Ğ¾Ğ¶Ğ½Ñ‹Ğ¼ Ğ²Ğ¾Ğ·Ğ²Ñ€Ğ°Ñ‰ĞµĞ½Ğ¸Ğµ Ğ·Ğ°Ğ³Ğ¾Ğ»Ğ¾Ğ²ĞºĞ° ContentRange
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method); // Ğ·Ğ°Ğ´Ğ°Ğ½Ğ¸Ğµ Ğ¼ĞµÑ‚Ğ¾Ğ´Ğ° Ğ·Ğ°Ğ¿Ñ€Ğ¾ÑĞ°
+		$query = http_build_query($curl_data); // Ğ¿Ğ¾ÑÑ‚Ñ€Ğ¾ĞµĞ½Ğ¸Ğµ ÑÑ‚Ñ€Ğ¾ĞºĞ¸ Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ¾Ğ²
 		switch ($method) {
-			case "PUT": // äëÿ PUT íåîáõîäèìî ïåğåäàâàòü äëèíó ñòğîêè ïàğàìåòğîâ
-				curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Length: " . strlen($query)));
-			case "POST": // ïàğàìåòğû PUT è POST ïåğåäàşòñÿ â òåëå çàïğîñà
+			case "PUT": // Ğ´Ğ»Ñ PUT Ğ½ĞµĞ¾Ğ±Ñ…Ğ¾Ğ´Ğ¸Ğ¼Ğ¾ Ğ¿ĞµÑ€ĞµĞ´Ğ°Ğ²Ğ°Ñ‚ÑŒ Ğ´Ğ»Ğ¸Ğ½Ñƒ ÑÑ‚Ñ€Ğ¾ĞºĞ¸ Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ¾Ğ²
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+					"Content-Length: " . strlen($query)
+				));
+			case "POST": // Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ñ‹ PUT Ğ¸ POST Ğ¿ĞµÑ€ĞµĞ´Ğ°ÑÑ‚ÑÑ Ğ² Ñ‚ĞµĞ»Ğµ Ğ·Ğ°Ğ¿Ñ€Ğ¾ÑĞ°
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $query);
 				break;
-			case "GET": // äëÿ GET è DELETE ïàğàìåòğû óêàçûâàşòñÿ â çàãîëîâêå
+			case "GET": // Ğ´Ğ»Ñ GET Ğ¸ DELETE Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ñ‹ ÑƒĞºĞ°Ğ·Ñ‹Ğ²Ğ°ÑÑ‚ÑÑ Ğ² Ğ·Ğ°Ğ³Ğ¾Ğ»Ğ¾Ğ²ĞºĞµ
 			case "DELETE":
 				$url .= "?$query";
 		}
-		curl_setopt($ch, CURLOPT_URL, $url); // çàäàíèå url çàïğîñà
-		$curl_response = curl_exec($ch); // âûïîëíåíèå çàïğîñà
-		$response = json_decode($curl_response, true); // ïàğñèíã ğåçóëüòàòîâ
+		curl_setopt($ch, CURLOPT_URL, $url); // Ğ·Ğ°Ğ´Ğ°Ğ½Ğ¸Ğµ url Ğ·Ğ°Ğ¿Ñ€Ğ¾ÑĞ°
+		$curl_response = curl_exec($ch); // Ğ²Ñ‹Ğ¿Ğ¾Ğ»Ğ½ĞµĞ½Ğ¸Ğµ Ğ·Ğ°Ğ¿Ñ€Ğ¾ÑĞ°
+		$response = json_decode($curl_response, true); // Ğ¿Ğ°Ñ€ÑĞ¸Ğ½Ğ³ Ñ€ĞµĞ·ÑƒĞ»ÑŒÑ‚Ğ°Ñ‚Ğ¾Ğ²
 		if (! $response)
-			$response = $curl_response; // åñëè ğåçóëüòàò íå json
-		$code = curl_getinfo($ch, CURLINFO_HTTP_CODE); // ïîëó÷åíèå êîäà ğåçóëüòàòà
+			$response = $curl_response; // ĞµÑĞ»Ğ¸ Ñ€ĞµĞ·ÑƒĞ»ÑŒÑ‚Ğ°Ñ‚ Ğ½Ğµ json
+		$code = curl_getinfo($ch, CURLINFO_HTTP_CODE); // Ğ¿Ğ¾Ğ»ÑƒÑ‡ĞµĞ½Ğ¸Ğµ ĞºĞ¾Ğ´Ğ° Ñ€ĞµĞ·ÑƒĞ»ÑŒÑ‚Ğ°Ñ‚Ğ°
 		curl_close($ch);
-		// àíàëèç îòâåòà
+		// Ğ°Ğ½Ğ°Ğ»Ğ¸Ğ· Ğ¾Ñ‚Ğ²ĞµÑ‚Ğ°
 		if ($code != 200) {
-			throw new Exception("Íåïğàâèëüíûé HTTP-êîä: ".$code);
+			throw new Exception("ĞĞµĞ¿Ñ€Ğ°Ğ²Ğ¸Ğ»ÑŒĞ½Ñ‹Ğ¹ HTTP-ĞºĞ¾Ğ´: " . $code);
 		} else 
 			if (is_array($response) && isset($response["errorMessage"])) {
-			throw new Exception("Âîçâğàùåíà îøèáêà: ".$response["errorMessage"]);
+				throw new Exception("Ğ’Ğ¾Ğ·Ğ²Ñ€Ğ°Ñ‰ĞµĞ½Ğ° Ğ¾ÑˆĞ¸Ğ±ĞºĞ°: " . $response["errorMessage"]);
 			} else {
 				return $response;
 			}
 	}
-	
-	function measuresMembersRegbyemail($measureId,$email) {
-		$url = $this->baseUrl."/service/v2/measures/$measureId/members/regbyemail/$email";
+
+	function measuresMembersRegbyemail($measureId, $email)
+	{
+		$url = $this->baseUrl . "/service/v2/measures/$measureId/members/regbyemail/$email";
 		return $this->sendrequest($url);
 	}
 }
