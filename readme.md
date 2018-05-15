@@ -1,14 +1,16 @@
 # PHP Mirapolis API
 
-Простейший класс-обертка для использования API Мираполиса. Код функций взят из <a href="http://support.mirapolis.ru/mira-support/#&id=69&type=mediapreview&doaction=Go">официальной документации</a>
+РџСЂРѕСЃС‚РµР№С€РёР№ РєР»Р°СЃСЃ-РѕР±РµСЂС‚РєР° РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ API РњРёСЂР°РїРѕР»РёСЃР°. РљРѕРґ С„СѓРЅРєС†РёР№ РІР·СЏС‚ РёР· <a href="http://support.mirapolis.ru/mira-support/#&id=69&type=mediapreview&doaction=Go">РѕС„РёС†РёР°Р»СЊРЅРѕР№ РґРѕРєСѓРјРµРЅС‚Р°С†РёРё</a>
 
-# Пример
+# РџСЂРёРјРµСЂ
 
+```
 include('mirapolis.php');
 $m = new Mirapolis();
 
-// регистрация на мероприятие по email
-$measureId = 524; // идентификатор мероприятия в системе Мираполис
-$email = 'test@email.ru'; // адрес пользователя
+// СЂРµРіРёСЃС‚СЂР°С†РёСЏ РЅР° РјРµСЂРѕРїСЂРёСЏС‚РёРµ РїРѕ email
+$measureId = 524; // РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РјРµСЂРѕРїСЂРёСЏС‚РёСЏ РІ СЃРёСЃС‚РµРјРµ РњРёСЂР°РїРѕР»РёСЃ
+$email = 'test@email.ru'; // Р°РґСЂРµСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
 print_r($m->measuresMembersRegbyemail($measureId,$email));
+```
